@@ -1,2 +1,55 @@
 # rainforest-auth
-Allows verification of Rainforest webhook messages using your private API key
+Allows verification of [RainForest](https://www.rainforestqa.com/) webhook
+messages using your private API key, and long-initializing webhooks with
+a callback URL.
+
+This is a port of the Ruby Module at https://github.com/rainforestapp/auth
+
+## Installation
+
+```
+npm install rainforest-auth --save
+```
+
+## Usage
+
+This assumes the context is within an express app.
+
+```
+var http = require('http');
+var RFA = require('rainforest-auth');
+var auth = new RFA('YOUR_KEY_HERE');
+
+app.post('/webhooks/rainforest', function (req, res, next) {
+    if (!auth.verify(req.body.digest, req.body.callback_type, req.body.options)) {
+        return res.send(403);
+    }
+    
+    if (req.body.callback_type != 'before_run') {
+        return res.send(200);
+    }
+
+    // Send our response right away, then continue on...
+    res.send(202);
+
+    var callback_url = auth.get_run_callback(req.body.run_id, req.body.callback_type);
+    do_some_slow_initialization(function (err) {
+        if (err) {
+            // handle error
+        }
+        else {
+            // Note the ruby example code suggests trying this up to 5 times
+            // so you might want to use async.doWhilst() for that.
+            http.request(callback_url, function (res) {
+                // most of this is not required - just here for logging
+                console.log('RAINFOREST STATUS: ' + res.statusCode);
+                console.log('RAINFOREST HEADERS: ' + JSON.stringify(res.headers));
+                res.setEncoding('utf8');
+                res.on('data', function (chunk) {
+                  console.log('RAINFOREST BODY: ' + chunk);
+                });
+            })
+        }
+    });    
+})
+```

@@ -1,0 +1,23 @@
+{
+  "name": "rainforest-auth",
+  "version": "0.1.0",
+  "description": "Allows verification of Rainforest webhook messages using your private API key",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/baudehlo/rainforest-auth.git"
+  },
+  "keywords": [
+    "rainforest",
+    "webhook"
+  ],
+  "author": "Matt Sergeant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/baudehlo/rainforest-auth/issues"
+  },
+  "homepage": "https://github.com/baudehlo/rainforest-auth"
+}
