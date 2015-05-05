@@ -21,14 +21,14 @@ var RFA = require('rainforest-auth');
 var auth = new RFA('YOUR_KEY_HERE');
 
 app.post('/webhooks/rainforest', function (req, res, next) {
-    if (!auth.verify(req.body.digest, req.body.callback_type, req.body.options)) {
-        return res.send(403);
-    }
-    
     if (req.body.callback_type != 'before_run') {
         return res.send(200);
     }
 
+    if (!auth.verify(req.body.digest, req.body.callback_type, req.body.options)) {
+        return res.send(403);
+    }
+    
     // Send our response right away, then continue on...
     res.send(202);
 
