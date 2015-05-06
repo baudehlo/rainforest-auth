@@ -1,13 +1,11 @@
 # rainforest-auth
-Allows verification of [RainForest](https://www.rainforestqa.com/) webhook
-messages using your private API key, and long-initializing webhooks with
-a callback URL.
+Allows verification of [Rainforest](https://www.rainforestqa.com/) webhook signed messages using your private API key, and advanced (aka long-initializing) webhooks with a callback URL. For more information on webhooks, see the [Rainforest docs here](http://support.rainforestqa.com/hc/en-us/articles/203606313-Webhooks).
 
-This is a port of the Ruby Module at https://github.com/rainforestapp/auth
+This is a port of the offical Ruby Gem at https://github.com/rainforestapp/auth
 
 ## Installation
 
-```
+```bash
 npm install rainforest-auth --save
 ```
 
@@ -15,7 +13,7 @@ npm install rainforest-auth --save
 
 This assumes the context is within an express app.
 
-```
+```javascript
 var http = require('http');
 var RFA = require('rainforest-auth');
 var auth = new RFA('YOUR_KEY_HERE');
